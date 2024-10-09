@@ -177,13 +177,17 @@ You can [join the TeamSpeak Sever](https://projekt-eleven.eu/eleven/redirects/ts
 
 Distributed under the MIT License. See [`LICENSE`](https://github.com/efebagri/teamspeak-serrver-banner/blob/main/LICENSE) for more information.
 
-## Contact
 
-Dennis Abrams - contact@dennis-abrams.com
-Efe Bagri - efe.bagri@exbil.net
+# 🙏 Thanks to:
+### 🧑🏻‍🤝‍🧑🏻 Contributors
+* Dennis Abrams (Main developer)
+* Efe Bagri (Code improvement)
 
-Orginal Project Link: [https://github.com/dennisabrams/teamspeak3-banner](https://github.com/dennisabrams/teamspeak3-banner)
+### 🚧 Used Open-Source libraries
+* [planetteamspeak/ts3phpframework](https://github.com/planetteamspeak/ts3phpframework)
 
-Improved Project Link: [https://github.com/efebagri/teamspeak-server-banner](https://github.com/efebagri/teamspeak-server-banner)
+### 🚧 Used Open-Source projects
+* [Orginal Project Link](https://github.com/dennisabrams/teamspeak3-banner)
+* [Improved Project Link](https://github.com/efebagri/teamspeak-server-banner)
 
-<p align="right"><a href="#readme-top">back to top ⬆</a></p>
+<p align="right"><a href="#readme-top">Back to top 🔝</a></p>
