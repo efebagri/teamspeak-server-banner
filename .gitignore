@@ -1,0 +1,62 @@
+# ===========================
+# PHPUnit Cache
+# ===========================
+.phpunit.cache
+.phpunit.result.cache
+
+# ===========================
+# Node.js & NPM
+# ===========================
+/node_modules
+npm-debug.log
+yarn-error.log
+yarn.lock
+
+# ===========================
+# Public Files
+# ===========================
+/public/build
+/public/hot
+/public/storage
+
+# ===========================
+# Sensitive Files
+# ===========================
+/storage/*.key
+#.env
+.env.old
+.env.backup
+.env.production
+storage/framework
+storage/debugbar
+# ===========================
+# Homestead Configuration
+# ===========================
+Homestead.json
+Homestead.yaml
+
+# ===========================
+# Authentication & Logs
+# ===========================
+/storage/*.log
+/storage/logs/
+auth.json
+
+# ===========================
+# IDE & Development Tools
+# ===========================
+/.fleet
+/.idea
+/.vscode
+
+# ===========================
+# Composer
+# ===========================
+composer.lock
+vendor
+
+# ===========================
+# Other
+# ===========================
+bootstrap/cache/*
+Modules/*

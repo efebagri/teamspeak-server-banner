@@ -1,0 +1,32 @@
+{
+    "name": "efebagri/teamspeak-server-banner",
+    "type": "project",
+    "description": "The skeleton application for the teamspeak banner.",
+    "keywords": [
+        "teamspeak-server-banner",
+        "teamspeak",
+        "framework",
+        "php"
+    ],
+    "authors": [
+        {
+            "name": "Efe Bagri",
+            "email": "composer@exbil.net",
+            "homepage": "https://www.exbil.net"
+        },
+        {
+            "name": "dennisabrams",
+            "email": "hello@dennis-abrams.com",
+            "homepage": "https://dennis-abrams.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/efebagri/teamspeak-server-banner/issues",
+        "source": "https://github.com/efebagri/teamspeak-server-banner"
+    },
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "planetteamspeak/ts3-php-framework": "^1.3"
+    }
+}

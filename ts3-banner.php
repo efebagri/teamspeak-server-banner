@@ -1,13 +1,5 @@
 <?php
 
-/*
- * ts3-banner.php
- *
- * Author: Dennis Abrams
- * Repository: https://github.com/dennisabrams/teamspeak3-banner
- *
- */
-
 require_once('config.php');
 require_once('drawing.php');
 require_once($ts3_libary);
