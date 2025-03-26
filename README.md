@@ -14,12 +14,17 @@ Fully customisable and responsive TeamSpeak 3 banner with server & client inform
    ```
 2. Configure the [`config.php`](https://github.com/dennisabrams/teamspeak3-banner/blob/main/config.php) file:
    ```php
-   $ts3_library = "PATH";
-   $serverquery_username = "serveradmin";
-   $serverquery_password = "PASSWORD";
-   $server_ip = "127.0.0.1";
-   $serverquery_port = "10011";
-   $server_port = "9987";
+   'ts3' => [
+        'library_path' => '../vendor/planetteamspeak/ts3-php-framework/libraries/TeamSpeak3/TeamSpeak3.php',
+        'connection' => [
+            'username' => 'serveradmin',
+            'password' => 'PASSWORD',
+            'ip' => '127.0.0.1',
+            'query_port' => 10011,
+            'server_port' => 9987,
+            'bots_count' => 0
+        ]
+    ],
    ```
 
 3. Add the URL of the banner to your TeamSpeak Server via the TeamSpeak 3 Client:
