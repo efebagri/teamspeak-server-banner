@@ -12,7 +12,7 @@ Fully customisable and responsive TeamSpeak 3 banner with server & client inform
    ```sh
    git clone https://github.com/efebagri/teamspeak3-banner.git ts3-banner
    ```
-2. Configure the [`config.php`](https://github.com/dennisabrams/teamspeak3-banner/blob/main/config.php) file:
+2. Configure the [`config.php`](https://github.com/efebagri/teamspeak3-banner/blob/main/config.php) file:
    ```php
    'ts3' => [
         'library_path' => '../vendor/planetteamspeak/ts3-php-framework/libraries/TeamSpeak3/TeamSpeak3.php',
