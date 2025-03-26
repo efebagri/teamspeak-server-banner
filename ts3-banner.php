@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use PlanetTeamSpeak\TeamSpeak3Framework\Exception\AdapterException;
+use PlanetTeamSpeak\TeamSpeak3Framework\Exception\HelperException;
 use PlanetTeamSpeak\TeamSpeak3Framework\TeamSpeak3;
 use PlanetTeamSpeak\TeamSpeak3Framework\Exception\ServerQueryException;
 
@@ -19,6 +21,12 @@ final class TeamSpeakBanner
 		require_once($this->config['ts3']['library_path']);
 	}
 
+    /**
+     * Generates an output by connecting to the server, initializing an image, rendering a banner,
+     * and outputting the final image. Handles any exceptions that occur during the process.
+     *
+     * @return void
+     */
 	public function generate(): void
 	{
 		try {
@@ -31,6 +39,15 @@ final class TeamSpeakBanner
 		}
 	}
 
+    /**
+     * Establishes a connection to the TeamSpeak 3 server using the configuration provided.
+     * Constructs a server query URI based on connection details and initializes the TeamSpeak3 instance.
+     *
+     * @return void
+     * @throws ServerQueryException
+     * @throws AdapterException
+     * @throws HelperException
+     */
 	private function connectToServer(): void
 	{
 		$connection = $this->config['ts3']['connection'];
@@ -46,6 +63,15 @@ final class TeamSpeakBanner
 		$this->ts3 = TeamSpeak3::factory($queryUri);
 	}
 
+    /**
+     * Initializes the image for display, including loading, validating, and processing the background image.
+     *
+     * This method reads the background image from the configured path,
+     * validates the image data, applies optional blur effects if enabled,
+     * and prepares an ImageDrawer instance for rendering.
+     *
+     * @return void
+     */
 	private function initializeImage(): void
 	{
 		$backgroundPath = $this->config['display']['background']['path'];
@@ -69,6 +95,14 @@ final class TeamSpeakBanner
 		$this->drawer = new ImageDrawer($this->banner, $width, $height);
 	}
 
+    /**
+     * Applies a blur effect to the background image based on the configured intensity.
+     *
+     * This method uses the Gaussian blur filter multiple times, as specified by
+     * the blur intensity in the configuration, to achieve the desired blurring effect.
+     *
+     * @return void
+     */
 	private function applyBlur(): void
 	{
 		$intensity = $this->config['display']['background']['blur']['intensity'];
@@ -77,6 +111,17 @@ final class TeamSpeakBanner
 		}
 	}
 
+    /**
+     * Renders the banner by drawing server and client details along with their statistics.
+     *
+     * This method retrieves server and client information, creates necessary colors,
+     * and draws the following components on the banner:
+     * - Server header with relevant details
+     * - Server and client statistics
+     * - Additional client information if the client is connected
+     *
+     * @return void
+     */
 	private function renderBanner(): void
 	{
 		$serverInfo = $this->getServerInfo();
@@ -97,6 +142,22 @@ final class TeamSpeakBanner
 		}
 	}
 
+    /**
+     * Retrieves detailed information about the server, including its name, uptime, version,
+     * active channels, client statistics, maximum client capacity, and system load.
+     *
+     * The method gathers data from the TeamSpeak 3 server instance, processes and formats
+     * it where necessary, and returns the information as an associative array.
+     *
+     * @return array An associative array containing server details:
+     *               - 'name': string (sanitized server name),
+     *               - 'uptime': string (formatted server uptime),
+     *               - 'version': string (server version),
+     *               - 'channels': int (number of active channels),
+     *               - 'clients': int (number of connected clients excluding bots),
+     *               - 'maxClients': int (maximum number of allowed clients),
+     *               - 'load': array (system load averages).
+     */
 	private function getServerInfo(): array
 	{
 		return [
@@ -112,6 +173,28 @@ final class TeamSpeakBanner
 		];
 	}
 
+    /**
+     * Retrieves information about the current client and server state, including connection status,
+     * the most recently joined user, and the number of administrators connected.
+     *
+     * This method collects data about the client's connection to the server, such as their nickname,
+     * connection time, bandwidth usage, and server groups. It also identifies the last user to join
+     * the server and counts the number of connected administrators.
+     *
+     * @return array An associative array containing client information and server state details:
+     *               - 'connected': (bool) Whether the client is connected.
+     *               - 'nickname': (string) The sanitized nickname of the client, if connected.
+     *               - 'connected_time': (string) The formatted duration since the connection started, if connected.
+     *               - 'total_connections': (int) The total number of times the client has connected, if connected.
+     *               - 'upload': (int) The bandwidth upload in the last minute, if connected.
+     *               - 'download': (int) The bandwidth download in the last minute, if connected.
+     *               - 'country': (string) The lowercase ISO country code of the client, if connected.
+     *               - 'groups': (array) A list of server group IDs the client belongs to, if connected.
+     *               - 'lastJoined': (array) An associative array with details of the last joined user:
+     *                   - 'time': (int) The connection time in milliseconds of the last joined user.
+     *                   - 'user': (string) The sanitized nickname of the last joined user.
+     *               - 'adminCount': (int) The total number of connected administrators.
+     */
 	private function getClientInfo(): array
 	{
 		$clientIp = $this->getClientIp();
@@ -157,6 +240,9 @@ final class TeamSpeakBanner
 		return $clientInfo;
 	}
 
+    /**
+     * @return array
+     */
 	private function createColors(): array
 	{
 		return [
@@ -175,6 +261,11 @@ final class TeamSpeakBanner
 		];
 	}
 
+    /**
+     * @param array $serverInfo
+     * @param array $colors
+     * @return void
+     */
 	private function drawServerHeader(array $serverInfo, array $colors): void
 	{
 		$logo = $this->config['server']['logo']['path'];
@@ -192,6 +283,9 @@ final class TeamSpeakBanner
 		}
 	}
 
+    /**
+     * @return void
+     */
 	private function outputImage(): void
 	{
 		header('Content-Type: image/png');
@@ -199,6 +293,10 @@ final class TeamSpeakBanner
 		imagedestroy($this->banner);
 	}
 
+    /**
+     * @param Exception $e
+     * @return void
+     */
 	private function handleError(Exception $e): void
 	{
 		header('Content-Type: text/html; charset=utf-8');
@@ -208,6 +306,10 @@ final class TeamSpeakBanner
 		));
 	}
 
+    /**
+     * @param string $text
+     * @return string
+     */
 	private function sanitizeText(string $text): string
 	{
 		return $this->config['display']['text']['ascii_only']
@@ -215,6 +317,10 @@ final class TeamSpeakBanner
 			: $text;
 	}
 
+    /**
+     * @param string $uptime
+     * @return string
+     */
 	private function formatUptime(string $uptime): string
 	{
 		return str_replace(
@@ -224,6 +330,10 @@ final class TeamSpeakBanner
 			) . 'min';
 	}
 
+    /**
+     * @param int $msTime
+     * @return array
+     */
 	private function formatConnectedTime(int $msTime): array
 	{
 		$minutes = (round($msTime / 60000) + 1);
@@ -233,6 +343,11 @@ final class TeamSpeakBanner
 		];
 	}
 
+    /**
+     * Retrieves the IP address of the client making the request.
+     *
+     * @return string The client's IP address, determined from server variables.
+     */
 	private function getClientIp(): string
 	{
 		return $_SERVER['HTTP_CLIENT_IP']

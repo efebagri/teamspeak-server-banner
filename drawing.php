@@ -5,12 +5,26 @@ declare(strict_types=1);
 final class ImageDrawer {
     private const INTERPOLATION = IMG_BICUBIC;
 
+    /**
+     * @param GdImage $banner
+     * @param float $width
+     * @param float $height
+     */
     public function __construct(
         private readonly GdImage $banner,
         private readonly float $width,
         private readonly float $height
     ) {}
 
+    /**
+     * @param float $size
+     * @param int $color
+     * @param string $font
+     * @param string $text
+     * @param float $x
+     * @param float $y
+     * @return void
+     */
     public function drawText(
         float $size,
         int $color,
@@ -44,6 +58,18 @@ final class ImageDrawer {
         );
     }
 
+    /**
+     * Draws a line with specified properties, including size, color, font, and thickness.
+     *
+     * @param float $size The size of the text to be drawn.
+     * @param int $color The color of the line.
+     * @param string $font The path to the font file.
+     * @param string $text The text to be drawn.
+     * @param float $x The x-coordinate as a percentage of width.
+     * @param float $thickness The thickness of the line.
+     *
+     * @return void
+     */
     public function drawLine(
         float $size,
         int $color,
@@ -72,6 +98,14 @@ final class ImageDrawer {
         );
     }
 
+    /**
+     * Draws and resizes an image onto the banner at a specified size, centering it.
+     *
+     * @param string $imagePath The file path of the image to be drawn.
+     * @param float $size The percentage size to which the image should be resized.
+     * @return void
+     * @throws RuntimeException If the image cannot be read, is invalid, or resizing fails.
+     */
     public function drawImage(string $imagePath, float $size): void {
         $imageData = file_get_contents($imagePath);
         if ($imageData === false) {
@@ -107,6 +141,12 @@ final class ImageDrawer {
         );
     }
 
+    /**
+     * Calculates the text size based on provided size and the dimensions.
+     *
+     * @param float $size The base size to calculate the text size.
+     * @return float The calculated text size.
+     */
     private function calculateTextSize(float $size): float {
         return ($this->width * $size) + ($this->height * $size);
     }
